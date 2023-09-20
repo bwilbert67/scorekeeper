@@ -3,6 +3,8 @@ package org.example;
 public class Player {
     private long score;
     private String name;
+    private int wins;
+    private boolean isPlaying;
 
     public Player() {
 
@@ -30,7 +32,24 @@ public class Player {
         this.score -= change;
         return score;
     }
+
     public String getName() {
         return name;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void addWin() {
+        wins++;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
     }
 }

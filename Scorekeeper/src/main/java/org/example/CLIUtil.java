@@ -22,6 +22,26 @@ public class CLIUtil {
             }
         }
     }
+    public int getInt(String message, int maxMenuOption) {
+        while (true) {
+            try {
+                System.out.print(message);
+                int result = userInput.nextInt();
+                userInput.nextLine();
+
+                if (result <= maxMenuOption) {
+                    return result;
+                } else {
+                    System.out.println("Please enter a valid menu option");
+                }
+
+            } catch (InputMismatchException ex) {
+                System.out.println("Please enter a valid number.");
+                userInput.nextLine();
+            }
+        }
+    }
+
     public String getString(String message) {
         String result;
         while (true) {
@@ -35,14 +55,29 @@ public class CLIUtil {
         return result;
     }
 
-    public List<String> getPlayerNames() {
+    public List<Player> getPlayerNames() {
         long playerCount = getLong("How many players?: ");
-        List<String> result = new ArrayList<>();
+        List<Player> result = new ArrayList<>();
         for(long i = 1; i <= playerCount; i++) {
-            String curPlayer = getString("Player " + i + ": ");
+            String name = getString("Player " + i + ": ");
+            Player curPlayer = new Player(name);
             result.add(curPlayer);
         }
         return result;
+    }
+
+    public int mainMenu() {
+        System.out.println("Please choose a number option and hit enter");
+        System.out.println("1: Start a new game");
+        System.out.println("2: Show the leader board");
+        System.out.println("3: Add a new player");
+        System.out.println("4: End gaming session");
+        int selection = getInt("What option do you choose: ", 4);
+        return selection;
+    }
+
+    public int inGameMenu() {
+        return 1;
     }
 
     public void printPlayersAndScore(List<Player> players, boolean isLowestWins) {
