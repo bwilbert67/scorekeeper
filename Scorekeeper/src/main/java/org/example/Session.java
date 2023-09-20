@@ -3,15 +3,15 @@ package org.example;
 import java.util.Comparator;
 import java.util.List;
 
-public class Game {
+public class Session {
     private List<Player> players;
     private boolean isLowestWins;
-
-    public Game() {
+    private List<Player> activePlayers;
+    public Session() {
 
     }
 
-    public Game(List<Player> players, boolean isLowestWins) {
+    public Session(List<Player> players, boolean isLowestWins) {
         this.players = players;
         this.isLowestWins = isLowestWins;
     }
@@ -32,7 +32,15 @@ public class Game {
         isLowestWins = lowestWins;
     }
 
-    public void printLeaderboard() {
+    public List<Player> getActivePlayers() {
+        return activePlayers;
+    }
+
+    public void setActivePlayers(List<Player> activePlayers) {
+        this.activePlayers = activePlayers;
+    }
+
+    public void printOverallLeaderboard() {
         players.sort(Comparator.comparingInt(Player::getWins).reversed());
 
         // Print medals for the top 3 players
@@ -61,4 +69,30 @@ public class Game {
         System.out.println("   \\/\\/  ");
     }
 
+    public void printCurrrentSessionLeaderboard() {
+        players.sort(Comparator.comparingInt(Player::getWins).reversed());
+
+        for (Player player : players) {
+            System.out.println(player.getName() + " - " + player.getWins() + " wins");
+        }
+    }
+
+    public Player printGameLeaderborad() {
+         if(isLowestWins) {
+             activePlayers.sort(Comparator.comparingLong(Player::getScore));
+         } else {
+             activePlayers.sort(Comparator.comparingLong(Player::getScore).reversed());
+         }
+         for(int i = 0; i < activePlayers.size(); i++) {
+             Player curPlayer = activePlayers.get(i);
+             System.out.println((i + 1) + ". " + curPlayer + " " + curPlayer.getScore());
+         }
+         //return winning player
+         return activePlayers.get(0);
+    }
+
+    public void updateWinner(Player winner) {
+        int index = activePlayers.indexOf(winner);
+        activePlayers.get(index).addWin();
+    }
 }
