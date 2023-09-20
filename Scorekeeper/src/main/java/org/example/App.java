@@ -1,9 +1,15 @@
 package org.example;
 
-public class App 
+import java.util.List;
+
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        CLIUtil scanner = new CLIUtil();
+        List<String> test = scanner.getPlayerNames();
+        for(String cur : test) {
+            System.out.println(cur);
+        }
     }
 }
