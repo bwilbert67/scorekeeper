@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Session {
         this.activePlayers = activePlayers;
     }
 
-    public void printOverallLeaderboard() {
+    public void printFinalLeaderboard() {
         players.sort(Comparator.comparingInt(Player::getWins).reversed());
 
         // Print medals for the top 3 players
@@ -75,9 +76,10 @@ public class Session {
         for (Player player : players) {
             System.out.println(player.getName() + " - " + player.getWins() + " wins");
         }
+        System.out.println("----------");
     }
 
-    public Player printGameLeaderborad() {
+    public List<Player> printGameLeaderborad() {
          if(isLowestWins) {
              activePlayers.sort(Comparator.comparingLong(Player::getScore));
          } else {
@@ -85,15 +87,30 @@ public class Session {
          }
          for(int i = 0; i < activePlayers.size(); i++) {
              Player curPlayer = activePlayers.get(i);
-             System.out.println((i + 1) + ". " + curPlayer + " " + curPlayer.getScore());
+             System.out.println((i + 1) + ". " + curPlayer.getName() + " " + curPlayer.getScore());
          }
-         //return winning player
-         return activePlayers.get(0);
+        System.out.println("__________");
+         //return winning player (multiple if there is a tie)
+        List<Player> result = new ArrayList<>();
+        //the list is sorted as of now, so first player will always get added
+        result.add(activePlayers.get(0));
+        for(int i = 0; i < activePlayers.size() - 1; i++) {
+            //now we are checking if there is a tie. If so, that means each suceeding player that ties with
+            //the first person in the list (winner) needs to be added
+            if(activePlayers.get(i).getScore() != activePlayers.get(i).getScore()) {
+                break;
+            } else {
+                result.add(activePlayers.get(i + 1));
+            }
+        }
+         return result;
     }
 
-    public void updateWinner(Player winner) {
-        int index = activePlayers.indexOf(winner);
-        activePlayers.get(index).addWin();
+    public void updateWinner(List<Player> winners) {
+        for(Player cur: winners) {
+            int index = activePlayers.indexOf(cur);
+            activePlayers.get(index).addWin();
+        }
     }
     public Player findActivePlayerByName(String name) {
         for(Player cur : activePlayers) {

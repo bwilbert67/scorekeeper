@@ -13,7 +13,7 @@ public class App
         scanner.printOpeningScreen();
         System.out.println("~Shall we play a game?~");
 
-        // TODO Add in ASCII robot art
+        // TODO Add in ASCII GAME NIGHT
 
         //Creates initial player list; Mass adding many players at once.
         List<Player> players = scanner.getPlayerNames();
@@ -49,27 +49,29 @@ public class App
                    cur.setScore(defaultScore);
                }
                thisSession.setActivePlayers(playing);
+               System.out.println("  ");
                while(isGameActive) {
                    int gameMenuSelection = scanner.inGameMenu();
                    if(gameMenuSelection == 1) {
                        System.out.println("Please enter the amount each score should change by.");
                        System.out.println("EX: -15 will subtract 15, but 15 will add 15");
-                       List<Long> newScores = new ArrayList<>();
+                       List<Long> scoreChanges = new ArrayList<>();
                        List<Player> temp = thisSession.getActivePlayers();
                        //gathering new scores so I can tell user and they can double check
                        for(Player cur : temp) {
-                           long scoreChange = scanner.getLong(cur.getName() + ":");
-                           long newScore = cur.getScore() + scoreChange;
-                           newScores.add(newScore);
+                           long scoreChange = scanner.getLong(cur.getName() + ": ");
+                           scoreChanges.add(scoreChange);
                        }
-                       for(int i = 0; i < newScores.size(); i++) {
-                           System.out.println(temp.get(i) + ": " + newScores.get(i));
+                       for(int i = 0; i < scoreChanges.size(); i++) {
+                           long change = scoreChanges.get(i);
+                           long current = temp.get(i).getScore();
+                           System.out.println(temp.get(i).getName() + ": " + (scoreChanges.get(i) + temp.get(i).getScore()));
                        }
                        String scoresRight = scanner.getString("Do these ^^ new scores looks right? Y or n?: ");
                        if(scoresRight.equalsIgnoreCase("y")) {
-                           for(int i = 0; i < newScores.size(); i++) {
+                           for(int i = 0; i < scoreChanges.size(); i++) {
                                Player cur = temp.get(i);
-                               long scoreChange = newScores.get(i);
+                               long scoreChange = scoreChanges.get(i);
                                cur.changeScore(scoreChange);
                            }
                        } else {
@@ -89,7 +91,7 @@ public class App
                        thisSession.printCurrrentSessionLeaderboard();
                    } else if(gameMenuSelection == 5) {
                        String doubleCheck = scanner.getString("Are you sure you want to end this game? All data " +
-                               "will be lost! Enter y or n?");
+                               "will be lost! Enter y or n: ");
                        if(doubleCheck.equalsIgnoreCase("y")) {
                            isGameActive = false;
                        } else {
@@ -98,8 +100,8 @@ public class App
                    }
                }
                //check who won and update their win total in the players list
-                Player winner = thisSession.printGameLeaderborad();
-                thisSession.updateWinner(winner);
+                List<Player> winners = thisSession.printGameLeaderborad();
+                thisSession.updateWinner(winners);
 
                 //current game is over
                System.out.println("Good game!");
@@ -107,11 +109,11 @@ public class App
                // show the current leaderboard
                thisSession.printCurrrentSessionLeaderboard();
            } else if (selection == 3) {
-               //add a new player
+               //TODO add a new player
            } else if (selection == 4) {
                //end game
-               String response = scanner.getString("Are you sure? Game data will " +
-                       "be lost. Enter Y if yes or N if no");
+               String response = scanner.getString("Are you sure you are done for the day? Game data will " +
+                       "be lost! Enter Y if yes or N if no: ");
                if(response.equalsIgnoreCase("y")) {
                    isSessionActive = false;
                } else {
@@ -121,6 +123,6 @@ public class App
         }
 
         //print final win standings
-        thisSession.printOverallLeaderboard();
+        thisSession.printFinalLeaderboard();
     }
 }

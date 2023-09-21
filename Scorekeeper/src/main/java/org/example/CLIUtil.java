@@ -63,6 +63,7 @@ public class CLIUtil {
             Player curPlayer = new Player(name);
             result.add(curPlayer);
         }
+        System.out.println("-----------");
         return result;
     }
 
@@ -71,8 +72,9 @@ public class CLIUtil {
         System.out.println("1: Start a new game");
         System.out.println("2: Show the session win leader board");
         System.out.println("3: Add a new player");
-        System.out.println("4: End gaming session");
+        System.out.println("4: End gaming session for the day!");
         int selection = getInt("What option do you choose: ", 4);
+        System.out.println("-----------");
         return selection;
     }
 
@@ -81,9 +83,12 @@ public class CLIUtil {
         System.out.println("2: Update specific player's score");
         System.out.println("3: Check game leaderboard");
         System.out.println("4: Check session win leaderboad");
-        System.out.println("5: End game and print winners");
+        System.out.println("5: End current round and print standings");
 
-        return getInt("What option do you choose", 5);
+        int option = getInt("What option do you choose: ", 5);
+        System.out.println("---------");
+
+        return option;
     }
 
     public void printPlayersAndScore(List<Player> players, boolean isLowestWins) {
@@ -98,11 +103,16 @@ public class CLIUtil {
         }
     }
     public void printOpeningScreen() {
-        System.out.println(".------..------..------..------.     .------..------..------..------..------.");
-        System.out.println("|G.--. ||A.--. ||M.--. ||E.--. |.-.  |N.--. ||I.--. ||G.--. ||H.--. ||T.--. |");
-        System.out.println("| :/\\: || (\\/) || (\\/) || (\\/) ((5)) | :(): || (\\/) || :/\\: || :/\\: || :/\\: |");
-        System.out.println("| :\\/: || :\\/: || :\\/: || :\\/: |'-.-.| ()() || :\\/: || :\\/: || (__) || (__) |");
-        System.out.println("| '--'G|| '--'A|| '--'M|| '--'E| ((1)) '--'N|| '--'I|| '--'G|| '--'H|| '--'T|");
-        System.out.println("`------'`------'`------'`------'  '-'`------'`------'`------'`------'`------'");
+        System.out.println(" .----------------.  .----------------.  .----------------.  .----------------.   .-----------------. .----------------.  .----------------.  .----------------.  .----------------. ");
+        System.out.println("| .--------------. || .--------------. || .--------------. || .--------------. | | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |");
+        System.out.println("| |    ______    | || |      __      | || | ____    ____ | || |  _________   | | | | ____  _____  | || |     _____    | || |    ______    | || |  ____  ____  | || |  _________   | |");
+        System.out.println("| |  .' ___  |   | || |     /  \\     | || ||_   \\  /   _|| || | |_   ___  |  | | | ||_   \\|_   _| | || |    |_   _|   | || |  .' ___  |   | || | |_   ||   _| | || | |  _   _  |  | |");
+        System.out.println("| | / .'   \\_|   | || |    / /\\ \\    | || |  |   \\/   |  | || |   | |_  \\_|  | | | |  |   \\ | |   | || |      | |     | || | / .'   \\_|   | || |   | |__| |   | || | |_/ | | \\_|  | |");
+        System.out.println("| | | |    ____  | || |   / ____ \\   | || |  | |\\  /| |  | || |   |  _|  _   | | | |  | |\\ \\| |   | || |      | |     | || | | |    ____  | || |   |  __  |   | || |     | |      | |");
+        System.out.println("| | \\ `.___]  _| | || | _/ /    \\ \\_ | || | _| |_\\/_| |_ | || |  _| |___/ |  | | | | _| |_\\   |_  | || |     _| |_    | || | \\ `.___]  _| | || |  _| |  | |_  | || |    _| |_     | |");
+        System.out.println("| |  `._____.'   | || ||____|  |____|| || ||_____||_____|| || | |_________|  | | | ||_____|\\____| | || |    |_____|   | || |  `._____.'   | || | |____||____| | || |   |_____|    | |");
+        System.out.println("| |              | || |              | || |              | || |              | | | |              | || |              | || |              | || |              | || |              | |");
+        System.out.println("| '--------------' || '--------------' || '--------------' || '--------------' | | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |");
+        System.out.println(" '----------------'  '----------------'  '----------------'  '----------------'   '----------------'  '----------------'  '----------------'  '----------------'  '----------------' ");
     }
 }
