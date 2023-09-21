@@ -10,6 +10,7 @@ public class App
     {
         Session thisSession = new Session();
         CLIUtil scanner = new CLIUtil();
+        scanner.printOpeningScreen();
         System.out.println("~Shall we play a game?~");
 
         // TODO Add in ASCII robot art
