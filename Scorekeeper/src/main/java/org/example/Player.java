@@ -27,13 +27,8 @@ public class Player {
         this.score = defaultScore;
     }
 
-    public long addScore(long change) {
+    public long changeScore(long change) {
         this.score += change;
-        return score;
-    }
-
-    public long subtractScore(long change) {
-        this.score -= change;
         return score;
     }
 

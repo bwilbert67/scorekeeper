@@ -69,7 +69,7 @@ public class CLIUtil {
     public int mainMenu() {
         System.out.println("Please choose a number option and hit enter");
         System.out.println("1: Start a new game");
-        System.out.println("2: Show the leader board");
+        System.out.println("2: Show the session win leader board");
         System.out.println("3: Add a new player");
         System.out.println("4: End gaming session");
         int selection = getInt("What option do you choose: ", 4);
@@ -77,7 +77,13 @@ public class CLIUtil {
     }
 
     public int inGameMenu() {
-        return 1;
+        System.out.println("1: Update all players scores");
+        System.out.println("2: Update specific player's score");
+        System.out.println("3: Check game leaderboard");
+        System.out.println("4: Check session win leaderboad");
+        System.out.println("5: End game and print winners");
+
+        return getInt("What option do you choose", 5);
     }
 
     public void printPlayersAndScore(List<Player> players, boolean isLowestWins) {

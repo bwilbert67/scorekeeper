@@ -8,11 +8,13 @@ public class App
 {
     public static void main( String[] args )
     {
+        Session thisSession = new Session();
         CLIUtil scanner = new CLIUtil();
         System.out.println("~Shall we play a game?~");
 
+        // TODO Add in ASCII robot art
+
         //Creates initial player list; Mass adding many players at once.
-        Session thisSession = new Session();
         List<Player> players = scanner.getPlayerNames();
         thisSession.setPlayers(players);
 
@@ -23,11 +25,11 @@ public class App
            if(selection == 1) {
                //start a new round
                boolean isGameActive = true;
-               boolean  isLowestWins = scanner.getString("Does lowest score win? Y or n: ").equalsIgnoreCase("y");
+               boolean  isLowestWins = scanner.getString("Does lowest score win? y or n: ").equalsIgnoreCase("y");
                thisSession.setLowestWins(isLowestWins);
 
                //checking if anyone is sitting out. Then making a list of active players
-               boolean isSittingOut = scanner.getString("Is anyone sitting out? Y or n: ").equalsIgnoreCase("y");
+               boolean isSittingOut = scanner.getString("Is anyone sitting out? y or n: ").equalsIgnoreCase("y");
                List<Player> playing = new ArrayList<>(thisSession.getPlayers());
 
                if(isSittingOut) {
@@ -47,8 +49,52 @@ public class App
                }
                thisSession.setActivePlayers(playing);
                while(isGameActive) {
-                   scanner.inGameMenu();
-                   // TODO update score of each player each round
+                   int gameMenuSelection = scanner.inGameMenu();
+                   if(gameMenuSelection == 1) {
+                       System.out.println("Please enter the amount each score should change by.");
+                       System.out.println("EX: -15 will subtract 15, but 15 will add 15");
+                       List<Long> newScores = new ArrayList<>();
+                       List<Player> temp = thisSession.getActivePlayers();
+                       //gathering new scores so I can tell user and they can double check
+                       for(Player cur : temp) {
+                           long scoreChange = scanner.getLong(cur.getName() + ":");
+                           long newScore = cur.getScore() + scoreChange;
+                           newScores.add(newScore);
+                       }
+                       for(int i = 0; i < newScores.size(); i++) {
+                           System.out.println(temp.get(i) + ": " + newScores.get(i));
+                       }
+                       String scoresRight = scanner.getString("Do these ^^ new scores looks right? Y or n?: ");
+                       if(scoresRight.equalsIgnoreCase("y")) {
+                           for(int i = 0; i < newScores.size(); i++) {
+                               Player cur = temp.get(i);
+                               long scoreChange = newScores.get(i);
+                               cur.changeScore(scoreChange);
+                           }
+                       } else {
+                           System.out.println("Oh no, try again!");
+                       }
+                       thisSession.printGameLeaderborad();
+                   } else if(gameMenuSelection == 2) {
+                       thisSession.printGameLeaderborad();
+                       String whoToChange = scanner.getString("Type the name of the player who's " +
+                               "score you wish to change: ");
+                       long newScore = scanner.getLong("What should their score be?: ");
+                       Player withNewScore = thisSession.updateActivePlayersGameScore(whoToChange, newScore);
+                       System.out.println("Players new score was set to " + withNewScore.getScore());
+                   } else if(gameMenuSelection == 3) {
+                       thisSession.printGameLeaderborad();
+                   } else if(gameMenuSelection == 4) {
+                       thisSession.printCurrrentSessionLeaderboard();
+                   } else if(gameMenuSelection == 5) {
+                       String doubleCheck = scanner.getString("Are you sure you want to end this game? All data " +
+                               "will be lost! Enter y or n?");
+                       if(doubleCheck.equalsIgnoreCase("y")) {
+                           isGameActive = false;
+                       } else {
+                           System.out.println("Phew, let's keep going!");
+                       }
+                   }
                }
                //check who won and update their win total in the players list
                 Player winner = thisSession.printGameLeaderborad();

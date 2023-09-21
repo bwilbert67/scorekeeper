@@ -95,4 +95,17 @@ public class Session {
         int index = activePlayers.indexOf(winner);
         activePlayers.get(index).addWin();
     }
+    public Player findActivePlayerByName(String name) {
+        for(Player cur : activePlayers) {
+            if(cur.getName().equalsIgnoreCase(name)) {
+                return cur;
+            }
+        }
+        return null;
+    }
+    public Player updateActivePlayersGameScore(String name, long newScore) {
+        Player toChange = findActivePlayerByName(name);
+        toChange.setScore(newScore);
+        return toChange;
+    }
 }
