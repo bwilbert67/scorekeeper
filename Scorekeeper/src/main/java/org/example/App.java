@@ -80,6 +80,7 @@ public class App
                        thisSession.printGameLeaderborad();
                    } else if(gameMenuSelection == 2) {
                        thisSession.printGameLeaderborad();
+                       //TODO Fix problem where a player is entered that does no exist
                        String whoToChange = scanner.getString("Type the name of the player who's " +
                                "score you wish to change: ");
                        long newScore = scanner.getLong("What should their score be?: ");
@@ -100,6 +101,7 @@ public class App
                    }
                }
                //check who won and update their win total in the players list
+               //TODO is giving eveyrone a win 
                 List<Player> winners = thisSession.printGameLeaderborad();
                 thisSession.updateWinner(winners);
 
